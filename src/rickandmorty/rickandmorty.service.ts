@@ -10,7 +10,7 @@ const MAX_CHARACTER_ID = 826;
 export class RickandmortyService {
   constructor(private readonly httpService: HttpService) {}
 
-  private getRandomNumber(): number {
+  getRandomNumber(): number {
     return Math.floor(Math.random() * MAX_CHARACTER_ID) + 1;
   }
 

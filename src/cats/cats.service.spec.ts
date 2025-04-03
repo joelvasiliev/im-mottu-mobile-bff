@@ -40,8 +40,8 @@ describe('CatService', () => {
       height: 500,
     };
 
-    const axiosResponse: AxiosResponse<Cat> = {
-      data: mockCat,
+    const axiosResponse: AxiosResponse<Cat[]> = {
+      data: [mockCat],
       status: 200,
       statusText: 'OK',
       headers: new AxiosHeaders(),

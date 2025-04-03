@@ -25,7 +25,20 @@ export class RickandmortyService {
       const response: AxiosResponse<Character> = await firstValueFrom(
         this.httpService.get<Character>(`${apiUrl}${randomId}`),
       );
-      return response.data;
+      const character = response.data;
+
+      if (!character.id || !character.name || !character.image) {
+        throw new HttpException(
+          {
+            message:
+              'Os dados retornados da The Rick and Morty API estão inválidos',
+            details: character,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+
+      return character;
     } catch (error) {
       const axiosError = error as AxiosError;
 

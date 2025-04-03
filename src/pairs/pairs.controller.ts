@@ -1,5 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Character } from 'src/rickandmorty/rickandmorty.dto';
 import { Pair } from './pairs.dto';
 import { PairsService } from './pairs.service';
@@ -13,6 +18,9 @@ export class PairsController {
   @ApiOkResponse({
     description: 'Relacionou com sucesso um personagem à um gato',
     type: Character,
+  })
+  @ApiOperation({
+    summary: 'Relaciona um personagem do Rick and Morty com um gato aleatório',
   })
   @ApiResponse({
     status: 500,

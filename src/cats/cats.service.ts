@@ -30,7 +30,19 @@ export class CatsService {
         );
       }
 
-      return cats[0];
+      const cat = cats[0];
+
+      if (!cat.id || !cat.url || !cat.width || !cat.height) {
+        throw new HttpException(
+          {
+            message: 'Os dados do gato retornado são inválidos',
+            details: cat,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+
+      return cat;
     } catch (error) {
       const axiosError = error as AxiosError;
 

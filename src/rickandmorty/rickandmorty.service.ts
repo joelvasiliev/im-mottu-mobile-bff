@@ -3,12 +3,16 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Character } from './rickandmorty.dto';
+import { ConfigService } from '@nestjs/config';
 
 const MAX_CHARACTER_ID = 826;
 
 @Injectable()
 export class RickandmortyService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+  ) {}
 
   getRandomNumber(): number {
     return Math.floor(Math.random() * MAX_CHARACTER_ID) + 1;
@@ -17,12 +21,10 @@ export class RickandmortyService {
   async getRandomCharacter(): Promise<Character> {
     try {
       const randomId = this.getRandomNumber();
+      const apiUrl = this.configService.get<string>('RICK_AND_MORTY_API_URL');
       const response: AxiosResponse<Character> = await firstValueFrom(
-        this.httpService.get<Character>(
-          `https://rickandmortyapi.com/api/character/${randomId}`,
-        ),
+        this.httpService.get<Character>(`${apiUrl}${randomId}`),
       );
-
       return response.data;
     } catch (error) {
       const axiosError = error as AxiosError;

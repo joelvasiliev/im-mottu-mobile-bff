@@ -9,16 +9,31 @@ import { Pair } from './pairs.dto';
 import { Character } from 'src/rickandmorty/rickandmorty.dto';
 import { CatsService } from 'src/cats/cats.service';
 import { RickandmortyService } from 'src/rickandmorty/rickandmorty.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('PairsService', () => {
   let service: PairsService;
   let httpService: HttpService;
+  let configService: ConfigService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PairsController,
         PairsService,
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              const env = {
+                RICKANDMORTY_API_URL:
+                  'https://rickandmortyapi.com/api/character',
+                CAT_API_URL: 'https://api.thecatapi.com/v1/images/search',
+              };
+              return env[key] as string;
+            }),
+          },
+        },
         {
           provide: CatsService,
           useValue: {
@@ -60,10 +75,20 @@ describe('PairsService', () => {
 
     service = module.get<PairsService>(PairsService);
     httpService = module.get<HttpService>(HttpService);
+    configService = module.get<ConfigService>(ConfigService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should have environment variables set', () => {
+    expect(configService.get('RICKANDMORTY_API_URL')).toBe(
+      'https://rickandmortyapi.com/api/character',
+    );
+    expect(configService.get('CAT_API_URL')).toBe(
+      'https://api.thecatapi.com/v1/images/search',
+    );
   });
 
   it('should return a character and a cat', async () => {

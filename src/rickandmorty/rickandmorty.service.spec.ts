@@ -5,10 +5,12 @@ import { of } from 'rxjs';
 import { AxiosResponse, AxiosHeaders } from 'axios';
 import { Character } from './rickandmorty.dto';
 import { RickandmortyController } from './rickandmorty.controller';
+import { ConfigService } from '@nestjs/config';
 
 describe('RickandmortyService', () => {
   let service: RickandmortyService;
   let httpService: HttpService;
+  let configService: ConfigService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,15 +23,34 @@ describe('RickandmortyService', () => {
             get: jest.fn(),
           },
         },
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              const env = {
+                RICKANDMORTY_API_URL:
+                  'https://rickandmortyapi.com/api/character',
+              };
+              return env[key] as string;
+            }),
+          },
+        },
       ],
     }).compile();
 
     service = module.get<RickandmortyService>(RickandmortyService);
     httpService = module.get<HttpService>(HttpService);
+    configService = module.get<ConfigService>(ConfigService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should have environment variables set', () => {
+    expect(configService.get('RICKANDMORTY_API_URL')).toBe(
+      'https://rickandmortyapi.com/api/character',
+    );
   });
 
   it('should return a random number between 1 and 826', () => {

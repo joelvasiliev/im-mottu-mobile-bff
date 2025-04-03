@@ -6,9 +6,20 @@ import { RickandmortyModule } from './rickandmorty/rickandmorty.module';
 import { PairsModule } from './pairs/pairs.module';
 import { HttpModule } from '@nestjs/axios';
 import { RickandmortyService } from './rickandmorty/rickandmorty.service';
+import { ConfigModule } from '@nestjs/config';
+import envConfig from './env.config';
 
 @Module({
-  imports: [HttpModule, CatsModule, RickandmortyModule, PairsModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [envConfig],
+      isGlobal: true,
+    }),
+    HttpModule,
+    CatsModule,
+    RickandmortyModule,
+    PairsModule,
+  ],
   controllers: [AppController],
   providers: [AppService, RickandmortyService],
   exports: [HttpModule],

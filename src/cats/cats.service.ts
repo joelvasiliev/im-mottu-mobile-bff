@@ -3,17 +3,20 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Cat } from './cats.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CatsService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async getRandomCat(): Promise<Cat> {
     try {
+      const apiUrl = this.configService.get<string>('CAT_API_URL');
       const response: AxiosResponse<Cat[]> = await firstValueFrom(
-        this.httpService.get<Cat[]>(
-          `https://api.thecatapi.com/v1/images/search`,
-        ),
+        this.httpService.get<Cat[]>(apiUrl as string),
       );
 
       const cats = response.data;

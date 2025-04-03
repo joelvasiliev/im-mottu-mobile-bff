@@ -29,15 +29,13 @@ describe('CatsController', () => {
   });
 
   describe('get', () => {
-    it('should return an array of Cat objects', async () => {
-      const mockCat: Cat[] = [
-        {
-          id: 'ed8',
-          url: 'https://cdn2.thecatapi.com/images/ed8.jpg',
-          width: 500,
-          height: 500,
-        },
-      ];
+    it('should return a cat', async () => {
+      const mockCat: Cat = {
+        id: 'ed8',
+        url: 'https://cdn2.thecatapi.com/images/ed8.jpg',
+        width: 500,
+        height: 500,
+      };
 
       jest.spyOn(service, 'getRandomCat').mockResolvedValue(mockCat);
 

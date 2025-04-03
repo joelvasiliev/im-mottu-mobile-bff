@@ -32,17 +32,15 @@ describe('CatService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should fetch a random cat list with one cat', async () => {
-    const mockCat: Cat[] = [
-      {
-        id: 'ed8',
-        url: 'https://cdn2.thecatapi.com/images/ed8.jpg',
-        width: 500,
-        height: 500,
-      },
-    ];
+  it('should fetch a random cat', async () => {
+    const mockCat: Cat = {
+      id: 'ed8',
+      url: 'https://cdn2.thecatapi.com/images/ed8.jpg',
+      width: 500,
+      height: 500,
+    };
 
-    const axiosResponse: AxiosResponse<Cat[]> = {
+    const axiosResponse: AxiosResponse<Cat> = {
       data: mockCat,
       status: 200,
       statusText: 'OK',

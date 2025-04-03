@@ -8,7 +8,7 @@ import { Cat } from './cats.dto';
 export class CatsService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getRandomCat(): Promise<Cat[]> {
+  async getRandomCat(): Promise<Cat> {
     try {
       const response: AxiosResponse<Cat[]> = await firstValueFrom(
         this.httpService.get<Cat[]>(
@@ -16,7 +16,18 @@ export class CatsService {
         ),
       );
 
-      return response.data;
+      const cats = response.data;
+
+      if (cats.length === 0) {
+        throw new HttpException(
+          {
+            message: 'Nenhum gato retornado na TheCatsAPI',
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+
+      return cats[0];
     } catch (error) {
       const axiosError = error as AxiosError;
 

@@ -13,13 +13,13 @@ export class CatsController {
   @ApiResponse({
     status: 200,
     description: 'Imagem aleatória de um gato retornada com sucesso',
-    type: [Cat],
+    type: Cat,
   })
   @ApiResponse({
     status: 500,
     description: 'Erro ao buscar dados da TheCatAPI',
   })
-  async get(): Promise<Cat[]> {
+  async get(): Promise<Cat> {
     return await this.catsService.getRandomCat();
   }
 }

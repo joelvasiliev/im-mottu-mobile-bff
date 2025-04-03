@@ -17,7 +17,7 @@ export class RickandmortyController {
     status: 500,
     description: 'Ocorreu um erro na busca',
   })
-  async get() {
+  async get(): Promise<Character> {
     return await this.rickandmortyService.getRandomCharacter();
   }
 }

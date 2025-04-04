@@ -4,5 +4,6 @@ export default () => ({
   RICK_AND_MORTY_API_URL:
     process.env.RICK_AND_MORTY_API_URL ||
     'https://rickandmortyapi.com/api/character/',
-  PORT: Number(process.env.PORT) || 3000,
+  REDIS_PORT: Number(process.env.REDIS_PORT) || 6379,
+  REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1',
 });

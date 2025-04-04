@@ -8,5 +8,6 @@ import { ConfigService } from '@nestjs/config';
   imports: [HttpModule],
   controllers: [RickandmortyController],
   providers: [RickandmortyService, ConfigService],
+  exports: [RickandmortyService],
 })
 export class RickandmortyModule {}

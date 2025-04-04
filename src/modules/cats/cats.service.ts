@@ -66,7 +66,6 @@ export class CatsService {
       const cached_breeds = await this.redisCatRepository.getCachedBreeds();
 
       if (cached_breeds) {
-        console.log('from cache');
         return cached_breeds;
       }
 

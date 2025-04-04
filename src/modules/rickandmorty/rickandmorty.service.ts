@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Character } from './rickandmorty.dto';
 import { ConfigService } from '@nestjs/config';
+import { RedisRickAndMortyRepository } from 'src/repositories/cache/redis-rickandmorty-repository';
 
 const MAX_CHARACTER_ID = 826;
 
@@ -12,6 +13,7 @@ export class RickandmortyService {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
+    private readonly redisRickAndMortyRepository: RedisRickAndMortyRepository,
   ) {}
 
   getRandomNumber(): number {
@@ -21,6 +23,15 @@ export class RickandmortyService {
   async getRandomCharacter(): Promise<Character> {
     try {
       const randomId = this.getRandomNumber();
+
+      const cached_character =
+        await this.redisRickAndMortyRepository.getCachedCharacter(randomId);
+      if (cached_character) {
+        console.log('Returned character from cache');
+        return cached_character;
+      }
+      console.log('fetch api');
+
       const apiUrl = this.configService.get<string>('RICK_AND_MORTY_API_URL');
       const response: AxiosResponse<Character> = await firstValueFrom(
         this.httpService.get<Character>(`${apiUrl}${randomId}`),
@@ -37,6 +48,8 @@ export class RickandmortyService {
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
+
+      await this.redisRickAndMortyRepository.setCacheCharacter(character);
 
       return character;
     } catch (error) {

@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { PairsController } from './pairs.controller';
 import { PairsService } from './pairs.service';
 import { HttpModule } from '@nestjs/axios';
-import { RickandmortyService } from 'src/rickandmorty/rickandmorty.service';
-import { CatsService } from 'src/cats/cats.service';
+import { RickandmortyService } from 'src/modules/rickandmorty/rickandmorty.service';
+import { CatsService } from 'src/modules/cats/cats.service';
 import { ConfigService } from '@nestjs/config';
 import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
 import { RedisService } from 'src/config/redis';
+import { RedisRickAndMortyRepository } from 'src/repositories/cache/redis-rickandmorty-repository';
 
 @Module({
   imports: [HttpModule],
@@ -18,6 +19,7 @@ import { RedisService } from 'src/config/redis';
     CatsService,
     RedisService,
     RedisCatRepository,
+    RedisRickAndMortyRepository,
   ],
 })
 export class PairsModule {}

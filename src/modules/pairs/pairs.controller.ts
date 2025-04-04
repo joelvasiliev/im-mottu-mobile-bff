@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Character } from 'src/rickandmorty/rickandmorty.dto';
+import { Character } from 'src/modules/rickandmorty/rickandmorty.dto';
 import { Pair } from './pairs.dto';
 import { PairsService } from './pairs.service';
 

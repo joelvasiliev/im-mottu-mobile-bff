@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsModule } from './cats/cats.module';
-import { RickandmortyModule } from './rickandmorty/rickandmorty.module';
-import { PairsModule } from './pairs/pairs.module';
+import { CatsModule } from './modules/cats/cats.module';
+import { RickandmortyModule } from './modules/rickandmorty/rickandmorty.module';
+import { PairsModule } from './modules/pairs/pairs.module';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import envConfig from './env.config';
 import { CacheModule } from '@nestjs/cache-manager';
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { PrismaService } from './config/prisma';
 import { RedisService } from './config/redis';

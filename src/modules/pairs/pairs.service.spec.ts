@@ -4,11 +4,11 @@ import { of } from 'rxjs';
 import { AxiosResponse, AxiosHeaders } from 'axios';
 import { PairsService } from './pairs.service';
 import { PairsController } from './pairs.controller';
-import { Cat } from 'src/cats/cats.dto';
+import { Cat } from 'src/modules/cats/cats.dto';
 import { Pair } from './pairs.dto';
-import { Character } from 'src/rickandmorty/rickandmorty.dto';
-import { CatsService } from 'src/cats/cats.service';
-import { RickandmortyService } from 'src/rickandmorty/rickandmorty.service';
+import { Character } from 'src/modules/rickandmorty/rickandmorty.dto';
+import { CatsService } from 'src/modules/cats/cats.service';
+import { RickandmortyService } from 'src/modules/rickandmorty/rickandmorty.service';
 import { ConfigService } from '@nestjs/config';
 
 describe('PairsService', () => {

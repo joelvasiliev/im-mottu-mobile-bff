@@ -1,4 +1,4 @@
-import { CatBreedResponse } from 'src/cats/cats.dto';
+import { CatBreedResponse } from 'src/modules/cats/cats.dto';
 
 export abstract class CatRepository {
   // abstract get(): Promise<Cat>;

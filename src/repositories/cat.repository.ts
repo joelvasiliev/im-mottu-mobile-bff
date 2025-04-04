@@ -1,6 +1,7 @@
-import { Cat, CatBreedResponse } from 'src/cats/cats.dto';
+import { CatBreedResponse } from 'src/cats/cats.dto';
 
 export abstract class CatRepository {
-  abstract get(): Promise<Cat>;
-  abstract getBreeds(): Promise<CatBreedResponse[]>;
+  // abstract get(): Promise<Cat>;
+  abstract getCachedBreeds(): Promise<CatBreedResponse[] | null>;
+  abstract setCacheBreeds(breeds: CatBreedResponse[]): Promise<void>;
 }

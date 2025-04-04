@@ -4,12 +4,14 @@ import { firstValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Cat, CatBreed, CatBreedResponse } from './cats.dto';
 import { ConfigService } from '@nestjs/config';
+import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
 
 @Injectable()
 export class CatsService {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
+    private readonly redisCatRepository: RedisCatRepository,
   ) {}
 
   async getRandomCat(): Promise<Cat> {
@@ -61,6 +63,15 @@ export class CatsService {
   }
   async getBreeds(): Promise<CatBreedResponse[]> {
     try {
+      const cached_breeds = await this.redisCatRepository.getCachedBreeds();
+
+      if (cached_breeds) {
+        console.log('from cache');
+        return cached_breeds;
+      }
+
+      console.log('from database');
+
       const apiUrl = this.configService.get<string>('CAT_API_URL');
       const response: AxiosResponse<CatBreed[]> = await firstValueFrom(
         this.httpService.get<CatBreed[]>(`${apiUrl}breeds`),
@@ -83,6 +94,8 @@ export class CatsService {
           name: breed.name,
         };
       });
+
+      await this.redisCatRepository.setCacheBreeds(filtered_breeds);
 
       return filtered_breeds;
     } catch (error) {

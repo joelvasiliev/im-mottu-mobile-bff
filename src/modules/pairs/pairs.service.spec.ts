@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PairsService } from './pairs.service';
+import { PairsService } from './application/use-cases/get-pair.use-case';
 import { Cat } from 'src/modules/cats/dto/cat.dto';
 import { Character } from 'src/modules/rickandmorty/dto/character.dto';
 import { CatsService } from 'src/modules/cats/application/use-cases';

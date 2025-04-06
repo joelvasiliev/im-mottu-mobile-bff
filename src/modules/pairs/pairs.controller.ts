@@ -7,13 +7,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Character } from 'src/modules/rickandmorty/dto/character.dto';
-import { Pair } from './pairs.dto';
-import { PairsService } from './pairs.service';
+import { Pair } from './dto/pair.dto';
+import { GetPairUseCase } from './application/use-cases/get-pair.use-case';
 
 @ApiTags('Pairs Controller')
 @Controller('v1/pairs')
 export class PairsController {
-  constructor(private readonly pairsService: PairsService) {}
+  constructor(private readonly getPairUseCase: GetPairUseCase) {}
 
   @Get()
   @ApiOkResponse({
@@ -34,6 +34,6 @@ export class PairsController {
     @Query('cat_breed') catBreed?: string,
   ): Promise<Pair> {
     console.log(characterName);
-    return await this.pairsService.execute(characterName, catBreed);
+    return await this.getPairUseCase.execute(characterName, catBreed);
   }
 }

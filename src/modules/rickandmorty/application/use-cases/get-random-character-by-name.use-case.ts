@@ -9,14 +9,14 @@ export class GetRandomCharacterByNameUseCase {
     private readonly redisRickAndMortyRepository: RedisRickAndMortyRepository,
     private readonly rickAndMortyApiRepository: RickAndMortyApiRepository,
   ) {}
-  async execute(character_name: string) {
+  async execute(character_name: string): Promise<Character> {
     const cached_search =
       await this.redisRickAndMortyRepository.getCachedSearch(
         character_name.trim().toLowerCase(),
       );
     if (cached_search) {
       console.log('Returned search from cache');
-      return cached_search;
+      return cached_search[Math.floor(Math.random() * cached_search.length)];
     }
     console.log('fetch api');
     const { info, results } =

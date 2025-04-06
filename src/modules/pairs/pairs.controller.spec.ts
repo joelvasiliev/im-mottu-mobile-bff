@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PairsController } from './pairs.controller';
-import { PairsService } from './pairs.service';
+import { PairsService } from './application/use-cases/get-pair.use-case';
 import { Character } from 'src/modules/rickandmorty/dto/character.dto';
 import { Cat } from 'src/modules/cats/dto/cat.dto';
-import { Pair } from './pairs.dto';
+import { Pair } from './dto/pair.dto';
 import { HttpException } from '@nestjs/common';
 
 describe('PairsController', () => {

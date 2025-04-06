@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { CatsController } from './cats.controller';
-import { CatsService } from './application/use-cases';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
@@ -16,7 +15,6 @@ import { CatApiRepository } from 'src/repositories/http/cat-api-repository';
   imports: [HttpModule.register({})],
   controllers: [CatsController],
   providers: [
-    CatsService,
     GetRandomCatUseCase,
     GetRandomCatByBreedUseCase,
     ListBreedsUseCase,
@@ -32,6 +30,11 @@ import { CatApiRepository } from 'src/repositories/http/cat-api-repository';
       useClass: RedisCatRepository,
     },
   ],
-  exports: [CatsService],
+  exports: [
+    CatApiRepository,
+    GetRandomCatUseCase,
+    GetRandomCatByBreedUseCase,
+    ListBreedsUseCase,
+  ],
 })
 export class CatsModule {}

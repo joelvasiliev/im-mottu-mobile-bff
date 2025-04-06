@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { RickandmortyController } from './rickandmorty.controller';
-import { RickandmortyService } from './application/use-cases/rickandmorty.service';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { RedisService } from 'src/config/redis';
@@ -17,7 +16,6 @@ import { RickAndMortyApiRepository } from 'src/repositories/http/rick-and-morty-
   imports: [HttpModule.register({})],
   controllers: [RickandmortyController],
   providers: [
-    RickandmortyService,
     GetRandomCharacterUseCase,
     GetRandomCharacterByNameUseCase,
     ConfigService,
@@ -32,6 +30,10 @@ import { RickAndMortyApiRepository } from 'src/repositories/http/rick-and-morty-
       useClass: RedisRickAndMortyRepository,
     },
   ],
-  exports: [RickandmortyService],
+  exports: [
+    RickAndMortyApiRepository,
+    GetRandomCharacterUseCase,
+    GetRandomCharacterByNameUseCase,
+  ],
 })
 export class RickandmortyModule {}

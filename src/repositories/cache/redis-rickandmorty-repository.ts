@@ -20,7 +20,7 @@ export class RedisRickAndMortyRepository implements RickAndMortyRepository {
 
     if (!cached_search) return null;
 
-    const parsed_cached_search: Character = JSON.parse(cached_search);
+    const parsed_cached_search: Character[] = JSON.parse(cached_search);
 
     return parsed_cached_search;
   }

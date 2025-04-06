@@ -37,3 +37,16 @@ export class Character {
   @ApiProperty()
   created: string;
 }
+
+export class ResponseCharacterWithFilter {
+  @ApiProperty({ type: () => Object })
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+
+  @ApiProperty({ type: [Character] })
+  results: Character[];
+}

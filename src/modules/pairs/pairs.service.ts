@@ -9,10 +9,18 @@ export class PairsService {
     private readonly rickandmortyService: RickandmortyService,
   ) {}
 
-  async execute() {
+  async execute(character_name?: string, cat_breed?: string) {
     try {
-      const cat = await this.catsService.getRandomCat();
-      const character = await this.rickandmortyService.getRandomCharacter();
+      console.log(cat_breed);
+      const cat = cat_breed
+        ? await this.catsService.getRandomCatByBreed(cat_breed)
+        : await this.catsService.getRandomCat();
+
+      const character = character_name
+        ? await this.rickandmortyService.getRandomCharacterByName(
+            character_name,
+          )
+        : await this.rickandmortyService.getRandomCharacter();
 
       if (!cat || !character) {
         throw new HttpException(
@@ -22,10 +30,10 @@ export class PairsService {
       }
 
       return { character, cat };
-    } catch {
+    } catch (e: any) {
       throw new HttpException(
         {
-          message: 'Ocorreu um erro ao relacionar gato com personagem',
+          message: e.message,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );

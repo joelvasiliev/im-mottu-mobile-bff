@@ -113,4 +113,39 @@ export class CatsService {
       );
     }
   }
+  async getRandomCatByBreed(breed: string): Promise<Cat> {
+    let breeds: CatBreedResponse[] | null;
+    breeds = await this.redisCatRepository.getCachedBreeds();
+    if (!breeds) {
+      breeds = await this.getBreeds();
+    }
+
+    const breed_exists = breeds.find((b) => b.id === breed);
+    if (!breed_exists) {
+      throw new HttpException(
+        {
+          message:
+            'Raça inválida. Para ver as raças disponíveis utilize a rota GET - cats/breeds',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    const apiUrl = this.configService.get<string>('CAT_API_URL');
+    const response: AxiosResponse<Cat[]> = await firstValueFrom(
+      this.httpService.get<Cat[]>(`${apiUrl}images/search?breed_ids=${breed}`),
+    );
+    const cats: Cat[] = response.data;
+
+    if (cats.length === 0) {
+      throw new HttpException(
+        {
+          message: 'Nenhum gato retornado na TheCatsAPI',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    return cats[0];
+  }
 }

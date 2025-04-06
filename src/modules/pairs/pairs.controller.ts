@@ -1,7 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import {
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -26,7 +27,13 @@ export class PairsController {
     status: 500,
     description: 'Ocorreu um erro na busca',
   })
-  async get(): Promise<Pair> {
-    return await this.pairsService.execute();
+  @ApiQuery({ name: 'character_name', required: false, type: String })
+  @ApiQuery({ name: 'cat_breed', required: false, type: String })
+  async get(
+    @Query('character_name') characterName?: string,
+    @Query('cat_breed') catBreed?: string,
+  ): Promise<Pair> {
+    console.log(characterName);
+    return await this.pairsService.execute(characterName, catBreed);
   }
 }

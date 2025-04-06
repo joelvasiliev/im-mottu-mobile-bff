@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PairsService } from './pairs.service';
-import { Cat } from 'src/modules/cats/cats.dto';
-import { Character } from 'src/modules/rickandmorty/rickandmorty.dto';
-import { CatsService } from 'src/modules/cats/cats.service';
-import { RickandmortyService } from 'src/modules/rickandmorty/rickandmorty.service';
+import { Cat } from 'src/modules/cats/dto/cat.dto';
+import { Character } from 'src/modules/rickandmorty/dto/character.dto';
+import { CatsService } from 'src/modules/cats/application/use-cases';
+import { RickandmortyService } from 'src/modules/rickandmorty/application/use-cases/rickandmorty.service';
 import { ConfigService } from '@nestjs/config';
 
 describe('PairsService', () => {

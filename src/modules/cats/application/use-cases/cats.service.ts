@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Cat, CatBreed, CatBreedResponse } from './cats.dto';
+import { Cat, CatBreed, CatBreedResponse } from 'src/modules/cats/dto';
 import { ConfigService } from '@nestjs/config';
 import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
 

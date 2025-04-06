@@ -1,17 +1,19 @@
 import { Controller, Get } from '@nestjs/common';
-import { RickandmortyService } from './rickandmorty.service';
 import {
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Character } from './rickandmorty.dto';
+import { Character } from './dto/character.dto';
+import { GetRandomCharacterUseCase } from './application/use-cases';
 
 @ApiTags('Rick and Morty')
 @Controller('v1/rickandmorty')
 export class RickandmortyController {
-  constructor(private readonly rickandmortyService: RickandmortyService) {}
+  constructor(
+    private readonly getRandomCharacterUseCase: GetRandomCharacterUseCase,
+  ) {}
 
   @Get('get-random-character')
   @ApiOperation({ summary: 'Obtém um personagem de Rick and Morty aleatório' })
@@ -24,6 +26,6 @@ export class RickandmortyController {
     description: 'Ocorreu um erro na busca',
   })
   async get(): Promise<Character> {
-    return await this.rickandmortyService.getRandomCharacter();
+    return await this.getRandomCharacterUseCase.execute();
   }
 }

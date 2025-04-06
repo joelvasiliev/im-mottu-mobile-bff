@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CatsService } from 'src/modules/cats/cats.service';
-import { RickandmortyService } from 'src/modules/rickandmorty/rickandmorty.service';
+import { CatsService } from 'src/modules/cats/application/use-cases';
+import { RickandmortyService } from 'src/modules/rickandmorty/application/use-cases/rickandmorty.service';
 
 @Injectable()
 export class PairsService {

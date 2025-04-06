@@ -1,4 +1,4 @@
-import { Character } from 'src/modules/rickandmorty/rickandmorty.dto';
+import { Character } from 'src/modules/rickandmorty/dto/character.dto';
 
 export abstract class RickAndMortyRepository {
   abstract getCachedCharacter(character_id: number): Promise<Character | null>;

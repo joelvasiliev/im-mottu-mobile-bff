@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RickandmortyService } from './rickandmorty.service';
+import { RickandmortyService } from './application/use-cases/rickandmorty.service';
 import { HttpService } from '@nestjs/axios';
 import { of } from 'rxjs';
 import { AxiosHeaders, AxiosResponse } from 'axios';
-import { Character } from './rickandmorty.dto';
+import { Character } from './dto/character.dto';
 import { ConfigService } from '@nestjs/config';
 import { RedisRickAndMortyRepository } from 'src/repositories/cache/redis-rickandmorty-repository';
 

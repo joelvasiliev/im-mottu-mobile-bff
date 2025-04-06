@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RickandmortyController } from './rickandmorty.controller';
-import { RickandmortyService } from './rickandmorty.service';
+import { RickandmortyService } from './application/use-cases/rickandmorty.service';
 
 describe('RickandmortyController', () => {
   let controller: RickandmortyController;

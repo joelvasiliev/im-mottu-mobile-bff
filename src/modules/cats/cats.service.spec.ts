@@ -3,8 +3,8 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { of, throwError } from 'rxjs';
 import { AxiosResponse, AxiosHeaders } from 'axios';
-import { CatsService } from './cats.service';
-import { Cat, CatBreedResponse } from './cats.dto';
+import { CatsService } from './application/use-cases';
+import { Cat, CatBreedResponse } from './dto';
 import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
 
 describe('CatsService', () => {

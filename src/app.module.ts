@@ -5,7 +5,7 @@ import { CatsModule } from './modules/cats/cats.module';
 import { RickandmortyModule } from './modules/rickandmorty/rickandmorty.module';
 import { PairsModule } from './modules/pairs/pairs.module';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import envConfig from './env.config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { UserModule } from './modules/user/user.module';
@@ -13,18 +13,26 @@ import * as redisStore from 'cache-manager-redis-store';
 import { PrismaService } from './config/prisma';
 import { RedisService } from './config/redis';
 
+console.log();
+
 @Module({
   imports: [
-    CacheModule.register({
-      store: redisStore,
-      host: 'localhost',
-      port: 6379,
-      ttl: 1800,
-    }),
     ConfigModule.forRoot({
       load: [envConfig],
       isGlobal: true,
     }),
+
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        store: redisStore,
+        host: config.get<string>('REDIS_HOST'),
+        port: config.get<number>('REDIS_PORT'),
+        ttl: 1800,
+      }),
+    }),
+
     HttpModule,
     CatsModule,
     RickandmortyModule,

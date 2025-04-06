@@ -1,19 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
 
 @Injectable()
 export class RedisService extends Redis {
-  constructor() {
-    super();
+  constructor(configService: ConfigService) {
+    const host = configService.get<string>('REDIS_HOST');
+    const port = configService.get<number>('REDIS_PORT');
 
-    super.on('error', (err) => {
-      console.error('Error on redis');
+    super({
+      host,
+      port,
+    });
+
+    // Listeners
+    this.on('error', (err) => {
+      console.error('❌ Redis error');
       console.error(err);
       process.exit(1);
     });
 
-    super.on('connect', () => {
-      console.log('Redis connected!');
+    this.on('connect', () => {
+      console.log('✅ Redis connected!');
     });
   }
 }

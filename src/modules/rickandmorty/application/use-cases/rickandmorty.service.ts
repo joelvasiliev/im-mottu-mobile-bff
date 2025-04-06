@@ -2,11 +2,13 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Character, ResponseCharacterWithFilter } from './rickandmorty.dto';
+import {
+  Character,
+  ResponseCharacterWithFilter,
+} from '../../dto/character.dto';
 import { ConfigService } from '@nestjs/config';
 import { RedisRickAndMortyRepository } from 'src/repositories/cache/redis-rickandmorty-repository';
-
-const MAX_CHARACTER_ID = 826;
+import { MAX_CHARACTER_ID } from 'src/modules/rickandmorty/constants/character.constants';
 
 @Injectable()
 export class RickandmortyService {

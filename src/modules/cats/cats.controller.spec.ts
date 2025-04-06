@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CatsController } from './cats.controller';
 import { CatsService } from './cats.service';
-import { Cat } from './cats.dto';
+import { Cat, CatBreedResponse } from './cats.dto';
 
 describe('CatsController', () => {
   let controller: CatsController;
@@ -15,6 +15,7 @@ describe('CatsController', () => {
           provide: CatsService,
           useValue: {
             getRandomCat: jest.fn(),
+            getBreeds: jest.fn(),
           },
         },
       ],
@@ -28,8 +29,8 @@ describe('CatsController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('get', () => {
-    it('should return a cat', async () => {
+  describe('getRandomCat', () => {
+    it('should return a random cat', async () => {
       const mockCat: Cat = {
         id: 'ed8',
         url: 'https://cdn2.thecatapi.com/images/ed8.jpg',
@@ -39,7 +40,7 @@ describe('CatsController', () => {
 
       jest.spyOn(service, 'getRandomCat').mockResolvedValue(mockCat);
 
-      const result = await controller.get();
+      const result = await controller.getRandomCat();
 
       expect(result).toEqual(mockCat);
     });
@@ -49,7 +50,30 @@ describe('CatsController', () => {
         .spyOn(service, 'getRandomCat')
         .mockRejectedValue(new Error('API error'));
 
-      await expect(controller.get()).rejects.toThrow('API error');
+      await expect(controller.getRandomCat()).rejects.toThrow('API error');
+    });
+  });
+
+  describe('getBreeds', () => {
+    it('should return list of cat breeds', async () => {
+      const mockBreeds: CatBreedResponse[] = [
+        { id: 'abys', name: 'Abyssinian' },
+        { id: 'beng', name: 'Bengal' },
+      ];
+
+      jest.spyOn(service, 'getBreeds').mockResolvedValue(mockBreeds);
+
+      const result = await controller.getBreeds();
+
+      expect(result).toEqual(mockBreeds);
+    });
+
+    it('should throw an error if the service throws an error', async () => {
+      jest
+        .spyOn(service, 'getBreeds')
+        .mockRejectedValue(new Error('API error'));
+
+      await expect(controller.getBreeds()).rejects.toThrow('API error');
     });
   });
 });

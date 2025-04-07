@@ -12,6 +12,7 @@ import { UserModule } from './modules/user/user.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { PrismaService } from './config/prisma';
 import { RedisService } from './config/redis';
+import { AuthModule } from './modules/auth/auth.module';
 
 console.log();
 
@@ -38,6 +39,7 @@ console.log();
     RickandmortyModule,
     PairsModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [RedisService, PrismaService, AppService],

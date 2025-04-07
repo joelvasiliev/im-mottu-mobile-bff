@@ -45,4 +45,7 @@ Criei o Dockerfile também para facilitar a instalação, além de isolar as dep
 # Decisões técnicas tomadas - Nível 2
 
 Aqui eu implementei o Redis por ter um melhor controle do cache, e resolvi deixar o docker-compose para facilitar a integração entre eles em diferentes ambientes, já com as variáveis de ambiente configuradas e a network para comunicação entre os containers.
-Além disso, implementei cache nas services:
+Além disso, implementei cache nas services de listar raças de gatos e de obter personagem por ID visando economizar requisições e prevenir erros da API fora do ar ou problemas internos.
+
+Separei os módulos em pastas seguindo DDD / Clean Code, visando escalabilidade do projeto, e seguindo as melhores práticas com Nest JS para a arquitetura do projeto.
+Também criei um módulo de usuários para futuramente implementar autenticação para algumas rotas ficarem protegidas.

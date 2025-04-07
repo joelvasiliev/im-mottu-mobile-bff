@@ -9,7 +9,6 @@ import {
 import { CreateUserUseCase } from './application/use-cases/create-user.use-case';
 import { GetUserByEmailUseCase } from './application/use-cases/get-user-by-email.use-case';
 import { CreateUserDto } from './dto/create-user.dto';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 
 @ApiTags('Users')
 @Controller('v1/user')
@@ -27,7 +26,6 @@ export class UserController {
     return this.createUserUseCase.execute(dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiOperation({ summary: 'Get user by email' })
   @ApiQuery({ name: 'email', required: true, example: 'joel@example.com' })

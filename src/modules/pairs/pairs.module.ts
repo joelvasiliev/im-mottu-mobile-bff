@@ -17,19 +17,14 @@ import { RedisRickAndMortyRepository } from 'src/modules/rickandmorty/infra/cach
 import { UserRepository } from 'src/repositories/prisma/user-repository';
 import { PrismaUserRepository } from '../user/infra/database/prisma-user.repository';
 import { PrismaService } from 'src/config/prisma';
-import { GetFavoritePairsUseCase } from './application/use-cases/get-favorites.use-case';
-import { AuthModule } from '../auth/auth.module';
-import { AddPairToFavoriteUseCase } from './application/use-cases/add-pair-to-favorites.use-case';
 
 @Module({
-  imports: [HttpModule, CatsModule, RickandmortyModule, AuthModule],
+  imports: [HttpModule, CatsModule, RickandmortyModule],
   controllers: [PairsController],
   providers: [
     PrismaService,
     ConfigService,
-    AddPairToFavoriteUseCase,
     GetPairUseCase,
-    GetFavoritePairsUseCase,
     GetRandomCatUseCase,
     GetRandomCharacterUseCase,
     GetRandomCharacterByNameUseCase,
@@ -43,6 +38,6 @@ import { AddPairToFavoriteUseCase } from './application/use-cases/add-pair-to-fa
       useClass: PrismaUserRepository,
     },
   ],
-  exports: [GetFavoritePairsUseCase, GetPairUseCase],
+  exports: [GetPairUseCase],
 })
 export class PairsModule {}

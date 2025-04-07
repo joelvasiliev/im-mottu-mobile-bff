@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CatRepository } from '../cat.repository';
+import { CatRepository } from 'src/repositories/cache/cat.repository';
 import { RedisService } from 'src/config/redis';
 import { CatBreedResponse } from 'src/modules/cats/dto';
 

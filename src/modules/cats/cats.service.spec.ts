@@ -5,7 +5,7 @@ import { of, throwError } from 'rxjs';
 import { AxiosResponse, AxiosHeaders } from 'axios';
 import { CatsService } from './application/use-cases';
 import { Cat, CatBreedResponse } from './dto';
-import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
+import { RedisCatRepository } from 'src/modules/cats/infra/cache/redis-cat-repository';
 
 describe('CatsService', () => {
   let service: CatsService;

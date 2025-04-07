@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { RedisRickAndMortyRepository } from 'src/repositories/cache/redis-rickandmorty-repository';
 import { RickAndMortyApiRepository } from 'src/repositories/http/rick-and-morty-api-repository';
 import { Character } from 'src/modules/rickandmorty/dto';
+import { RedisRickAndMortyRepository } from 'src/modules/rickandmorty/infra/cache/redis-rickandmorty-repository';
 
 @Injectable()
 export class GetRandomCharacterByNameUseCase {

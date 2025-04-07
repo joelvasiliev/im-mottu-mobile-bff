@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Cat, CatBreedResponse } from 'src/modules/cats/dto';
-import { RedisCatRepository } from 'src/repositories/cache/redis-cat-repository';
+import { RedisCatRepository } from 'src/modules/cats/infra/cache/redis-cat-repository';
 import { CatApiRepository } from 'src/repositories/http/cat-api-repository';
 import { ListBreedsUseCase } from './list-breeds.use-case';
 

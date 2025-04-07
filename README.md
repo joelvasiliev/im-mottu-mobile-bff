@@ -46,9 +46,3 @@ Criei o Dockerfile também para facilitar a instalação, além de isolar as dep
 
 Aqui eu implementei o Redis por ter um melhor controle do cache, e resolvi deixar o docker-compose para facilitar a integração entre eles em diferentes ambientes, já com as variáveis de ambiente configuradas e a network para comunicação entre os containers.
 Além disso, implementei cache nas services:
-
-- src/modules/rickandmorty/rickandmorty.service.ts (getRandomCharacter) = Aqui como temos a busca de um personagem por um número aleatório gerado, antes de fazer a requisição na API consultamos se existe aquele personagem salvo dentro do cache, visando economizar requisições, melhorando o desempenho e minimizando erros por instabilidades da API.
-- src/modules/rickandmorty/rickandmorty.service.ts (getRandomCharacterByName) = Aqui para cada query de busca por nome de personagem, salvo os resultados em cache visando otimizar o desempenho da API, e evitar requisições repetidas.
-- src/modules/cats/cats.service.ts (getBreeds) = Aqui eu salvo as raças dos gatos em cache, pois são dados que dificilmente irão mudar, portanto não preciso ficar fazendo requisições todas as vezes.
-
-Aqui eu optei por manter todas as funções dentro de somente uma service por se tratar de uma API pequena, porém dependendo da complexidade da service é interessante criar uma pasta services e separar responsabilidade por arquivo.

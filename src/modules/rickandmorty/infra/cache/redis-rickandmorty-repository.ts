@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/config/redis';
-import { RickAndMortyRepository } from '../rickandmorty.repository';
 import { Character } from 'src/modules/rickandmorty/dto/character.dto';
+import { RickAndMortyRepository } from 'src/repositories/cache/rickandmorty.repository';
 
 @Injectable()
 export class RedisRickAndMortyRepository implements RickAndMortyRepository {

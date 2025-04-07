@@ -7,9 +7,12 @@ import {
   Character,
   ResponseCharacterWithFilter,
 } from 'src/modules/rickandmorty/dto';
+import { RickAndMortyApiRepository } from 'src/repositories/http/rick-and-morty-api-repository';
 
 @Injectable()
-export class RickAndMortyApiHttpRepository {
+export class RickAndMortyApiHttpRepository
+  implements RickAndMortyApiRepository
+{
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,

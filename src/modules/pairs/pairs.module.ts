@@ -19,6 +19,7 @@ import { PrismaUserRepository } from '../user/infra/database/prisma-user.reposit
 import { PrismaService } from 'src/config/prisma';
 import { GetFavoritePairsUseCase } from './application/use-cases/get-favorites.use-case';
 import { AuthModule } from '../auth/auth.module';
+import { AddPairToFavoriteUseCase } from './application/use-cases/add-pair-to-favorites.use-case';
 
 @Module({
   imports: [HttpModule, CatsModule, RickandmortyModule, AuthModule],
@@ -26,6 +27,7 @@ import { AuthModule } from '../auth/auth.module';
   providers: [
     PrismaService,
     ConfigService,
+    AddPairToFavoriteUseCase,
     GetPairUseCase,
     GetFavoritePairsUseCase,
     GetRandomCatUseCase,

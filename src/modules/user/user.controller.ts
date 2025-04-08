@@ -29,10 +29,36 @@ export class UserController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new user' })
-  @ApiBody({ type: CreateUserDto })
-  @ApiResponse({ status: 201, description: 'User created successfully' })
-  @ApiResponse({ status: 409, description: 'Email already in use' })
+  @ApiOperation({
+    summary: 'Criar novo usuário',
+    description: 'Cria um novo usuário com e-mail e senha.',
+  })
+  @ApiBody({
+    type: CreateUserDto,
+    examples: {
+      example1: {
+        summary: 'Cadastro válido',
+        value: {
+          email: 'usuario@email.com',
+          password: 'senhaSegura123',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Usuário criado com sucesso',
+    schema: {
+      example: {
+        id: 'user-id-abc123',
+        email: 'usuario@email.com',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'E-mail já está em uso',
+  })
   async create(@Body() dto: CreateUserDto) {
     return this.createUserUseCase.execute(dto);
   }
@@ -41,19 +67,29 @@ export class UserController {
   @ApiBearerAuth()
   @Get()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Get me (authenticated)' })
+  @ApiOperation({
+    summary: 'Buscar usuário autenticado',
+    description:
+      'Retorna os dados do usuário autenticado com base no token JWT.',
+  })
   @ApiResponse({
     status: 200,
-    description: 'User found',
+    description: 'Usuário encontrado',
     schema: {
       example: {
-        id: 'user-id-123',
-        email: 'joel@example.com',
+        id: 'user-id-abc123',
+        email: 'usuario@email.com',
       },
     },
   })
-  @ApiResponse({ status: 404, description: 'User not found' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 401,
+    description: 'Token JWT inválido ou ausente',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Usuário não encontrado',
+  })
   async getByEmail(@Req() req) {
     return this.getUserByEmailUseCase.execute(req.user.email as string);
   }

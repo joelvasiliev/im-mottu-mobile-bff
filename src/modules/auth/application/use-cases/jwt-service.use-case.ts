@@ -6,7 +6,7 @@ export class JwtServiceUseCase {
   constructor(private jwt: NestJwtService) {}
 
   sign(payload: any): any {
-    return this.jwt.sign(payload);
+    return this.jwt.sign(payload as string);
   }
 
   verify(token: string): any {

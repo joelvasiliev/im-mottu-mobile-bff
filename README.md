@@ -46,3 +46,9 @@ Criei o Dockerfile também para facilitar a instalação, além de isolar as dep
 
 Aqui eu implementei o Redis por ter um melhor controle do cache, e resolvi deixar o docker-compose para facilitar a integração entre eles em diferentes ambientes, já com as variáveis de ambiente configuradas e a network para comunicação entre os containers.
 Além disso, implementei cache nas services:
+
+# Decisões técnicas tomadas - Nível 3
+
+Aqui eu implementei um método de autenticação que consome do módulo de usuários do nível anterior, configurei o Jwt com guard para proteger algumas rotas.
+Além disso, criei a rota GET - /v1/pairs/favorites para listagem dos favoritos (com paginação), e a rota POST - /v1/pairs/favorite para adicionar um novo par como favorito (somente para o usuário logado, essa é uma rota protegida)
+Adicionei a biblioteca Bcrypt para criptografar a senha enviada pelo usuário antes de enviar para o banco de dados, visando seguir a LGPD.

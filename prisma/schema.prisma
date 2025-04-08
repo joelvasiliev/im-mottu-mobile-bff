@@ -16,10 +16,10 @@ model User {
 }
 
 model FavoritePairs {
-  id           String  @id @default(uuid())
+  id           String @id @default(uuid())
   character_id Int
   cat_id       String
-  user_id      String?
+  user_id      String
 
-  user User? @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
 }

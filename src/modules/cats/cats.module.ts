@@ -10,9 +10,16 @@ import { ListBreedsUseCase } from './application/use-cases/list-breeds.use-case'
 import { GetRandomCatUseCase } from './application/use-cases/get-random-cat.use-case';
 import { CatApiHttpRepository } from './infra/http/cat-api.http.repository';
 import { CatApiRepository } from 'src/repositories/http/cat-api-repository';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
-  imports: [HttpModule.register({})],
+  imports: [
+    CacheModule.register({
+      ttl: 3600,
+      max: 100,
+    }),
+    HttpModule.register({}),
+  ],
   controllers: [CatsController],
   providers: [
     GetRandomCatUseCase,

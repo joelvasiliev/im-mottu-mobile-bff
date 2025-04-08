@@ -63,4 +63,10 @@ Adicionei também um exemplo de teste de integração no test/pairs.e2e.spec.ts
 # Extra
 
 Eu fiz um front-end (básico) para consumir a API, apenas para exemplificar como ficaria esse projeto em produção em um cenário mais próximo a realidade. Eu não explorei tanto o front por não ser o foco, mas vou adicionar vocês também no repositório de frontend caso queiram rodar, e vou deixá-lo hospedado na Vercel e a API e o Redis na Render
-Adicionei também uma collection do postman
+Adicionei também uma collection do postman (Mottu BFF.postman_collection.json)
+
+```
+Frontend: https://im-mottu-frontend.vercel.app/inicio
+Backend: https://im-mottu-mobile-bff.onrender.com
+API Docs: https://im-mottu-mobile-bff.onrender.com/api/docs
+```

@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "f20b86c9-2ab9-4142-af45-cb6811c9fca2",
+		"name": "Mottu BFF",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15263060"
+	},
+	"item": [
+		{
+			"name": "get random character",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/rickandmorty/get-random-character",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"rickandmorty",
+						"get-random-character"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get random cat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/cats/get-random-cat",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"cats",
+						"get-random-cat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cat breeds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/cats/breeds",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"cats",
+						"breeds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get pairs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/pairs",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"pairs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/healthcheck",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get favorites",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/pairs/favorites",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"pairs",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add favorite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MTUyMmE0Ni02NzlhLTQzODQtOTc1NS1jYWQ3Y2ZiMTNhNTgiLCJlbWFpbCI6ImpvZWwudmFzaWxpZXYubmV0b0BnbWFpbC5jb20iLCJpYXQiOjE3NDQxNDQ0MjcsImV4cCI6MTc0NDIzMDgyN30.WkNIcdyhxJrMH4sBJcHxd5ZeOJxx0Ry5lY0vVhBRz84",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cat_id\": \"Z5Wd0A-r_\",\r\n    \"character_id\": 661\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/pairs/favorite",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"pairs",
+						"favorite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rick and morty api get character",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/character?name=&page=2",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"character"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": ""
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user logged",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/user",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"teste@email.com\",\r\n    \"password\": \"Umasenhaforte\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/user",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"teste@email.com\",\r\n    \"password\": \"Umasenhaforte\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://im-mottu-mobile-bff.onrender.com/v1/auth/sign-in",
+					"protocol": "https",
+					"host": [
+						"im-mottu-mobile-bff",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

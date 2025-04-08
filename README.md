@@ -12,7 +12,10 @@ Com docker:
 docker-compose up
 ```
 
-Sem docker: (Precisa ter o redis rodando e configurar corretamente as credenciais no .env)
+Esse comando irá criar um network com um redis e o BFF, já configurando as variáveis de ambiente e irá subir a API.
+Para testar se funcionou http://127.0.0.1:3000/healthcheck
+
+Sem docker: (Precisa ter o redis rodando e ter configurado corretamente as variáveis de ambiente no .env)
 
 ```
 npm install
@@ -30,6 +33,8 @@ Como ferramenta de testes eu utilizei o Jest.
 Para rodar todos os testes unitários do projeto, rode o comando ``npm run test` da raiz do projeto.
 Você também pode testar algum arquivo de teste específico digitando o nome dele após o 'test'. Exemplo: `npm run test cats`
 Quando você roda o Dockerfile (como na seção "Como rodar o projeto? - Com docker") ele automaticamente executa os testes unitários antes de buildar e rodar a API.
+
+Para rodar os testes do nivel 3 precisa estar com o redis rodando, se não o teste e2e vai dar erro.
 
 # Como testar as rotas?
 
@@ -53,3 +58,8 @@ Aqui eu implementei um método de autenticação que consome do módulo de usuá
 Além disso, criei a rota GET - /v1/pairs/favorites para listagem dos favoritos (com paginação), e a rota POST - /v1/pairs/favorite para adicionar um novo par como favorito (somente para o usuário logado, essa é uma rota protegida)
 Adicionei a biblioteca Bcrypt para criptografar a senha enviada pelo usuário antes de enviar para o banco de dados, visando seguir a LGPD.
 Implementei um sistema de logs customizados, middleware para tratamento de erros e implementei testes unitários para todas as use-cases e controllers.
+Adicionei também um exemplo de teste de integração no test/pairs.e2e.spec.ts
+
+# Extra
+
+Eu fiz um front-end (básico) para consumir a API, apenas para exemplificar como ficaria esse projeto em produção em um cenário mais próximo a realidade. Eu não explorei tanto o front por não ser o foco, mas vou adicionar vocês também no repositório de frontend caso queiram rodar, e vou deixá-lo hospedado na Vercel e a API e o Redis na Render

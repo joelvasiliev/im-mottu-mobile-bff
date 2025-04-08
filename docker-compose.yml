@@ -5,17 +5,19 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
+      - '3001:3001'
     depends_on:
       - redis
     environment:
+      CAT_API_URL: https://api.thecatapi.com/v1/
+      RICK_AND_MORTY_API_URL: https://rickandmortyapi.com/api/character/
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      RICK_AND_MORTY_API_URL: https://rickandmortyapi.com/api/character/
-      CAT_API_URL: https://api.thecatapi.com/v1/
-    volumes:
-      - .:/app
-    command: npm run start
+      DATABASE_URL: "file:./dev.db"
+      AXIOS_INSTANCE_TOKEN: c7ccde25-e445-42c1-a46b-aedef6c25431
+      JWT_SECRET: dbb1f171-7b8d-49c9-a8e6-59e58dbac5b7
+      PORT: 3001
+    command: sh -c "npx prisma generate && node dist/main.js "
 
   redis:
     container_name: redis

@@ -48,8 +48,8 @@ export class PairsController {
     name: 'cat_breed',
     required: false,
     type: String,
-    example: 'Siberian',
-    description: 'Raça do gato (parcial ou completa)',
+    example: 'abys',
+    description: 'ID da Raça do gato (obtido na rota GET - /v1/cats/breeds)',
   })
   @ApiResponse({
     status: 200,

@@ -45,12 +45,18 @@ describe('UserController', () => {
   });
 
   describe('getByEmail', () => {
-    it('should return a user by email', async () => {
-      const email = 'joel@example.com';
+    it('should return a user from req.user.email', async () => {
+      const mockReq = {
+        user: {
+          email: 'joel@example.com',
+        },
+      };
 
-      const result = await controller.getByEmail(email);
+      const result = await controller.getByEmail(mockReq as any);
 
-      expect(mockGetUserByEmailUseCase.execute).toHaveBeenCalledWith(email);
+      expect(mockGetUserByEmailUseCase.execute).toHaveBeenCalledWith(
+        'joel@example.com',
+      );
       expect(result).toEqual(mockUser);
     });
   });

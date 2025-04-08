@@ -1,10 +1,19 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
+  Req,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
-  ApiQuery,
   ApiBody,
   ApiResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CreateUserUseCase } from './application/use-cases/create-user.use-case';
 import { GetUserByEmailUseCase } from './application/use-cases/get-user-by-email.use-case';
@@ -23,17 +32,29 @@ export class UserController {
   @ApiOperation({ summary: 'Create a new user' })
   @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 201, description: 'User created successfully' })
+  @ApiResponse({ status: 409, description: 'Email already in use' })
   async create(@Body() dto: CreateUserDto) {
     return this.createUserUseCase.execute(dto);
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get()
-  @ApiOperation({ summary: 'Get user by email' })
-  @ApiQuery({ name: 'email', required: true, example: 'joel@example.com' })
-  @ApiResponse({ status: 200, description: 'User found' })
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get me (authenticated)' })
+  @ApiResponse({
+    status: 200,
+    description: 'User found',
+    schema: {
+      example: {
+        id: 'user-id-123',
+        email: 'joel@example.com',
+      },
+    },
+  })
   @ApiResponse({ status: 404, description: 'User not found' })
-  async getByEmail(@Query('email') email: string) {
-    return this.getUserByEmailUseCase.execute(email);
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async getByEmail(@Req() req) {
+    return this.getUserByEmailUseCase.execute(req.user.email as string);
   }
 }

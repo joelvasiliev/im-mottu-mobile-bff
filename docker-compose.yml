@@ -17,6 +17,7 @@ services:
       AXIOS_INSTANCE_TOKEN: c7ccde25-e445-42c1-a46b-aedef6c25431
       JWT_SECRET: dbb1f171-7b8d-49c9-a8e6-59e58dbac5b7
       PORT: 3001
+      FRONTEND_URL: https://im-mottu-frontend.vercel.app/
     command: sh -c "npx prisma generate && node dist/main.js "
 
   redis:

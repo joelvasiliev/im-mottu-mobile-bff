@@ -10,11 +10,13 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL,
     methods: 'GET, POST',
     credentials: true,
   });
   setupSwagger(app);
+
+  console.log(process.env.FRONTEND_URL);
 
   app.useGlobalFilters(new GlobalExceptionFilter());
 

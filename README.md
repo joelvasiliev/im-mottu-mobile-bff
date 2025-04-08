@@ -52,3 +52,4 @@ Além disso, implementei cache nas services:
 Aqui eu implementei um método de autenticação que consome do módulo de usuários do nível anterior, configurei o Jwt com guard para proteger algumas rotas.
 Além disso, criei a rota GET - /v1/pairs/favorites para listagem dos favoritos (com paginação), e a rota POST - /v1/pairs/favorite para adicionar um novo par como favorito (somente para o usuário logado, essa é uma rota protegida)
 Adicionei a biblioteca Bcrypt para criptografar a senha enviada pelo usuário antes de enviar para o banco de dados, visando seguir a LGPD.
+Implementei um sistema de logs customizados, middleware para tratamento de erros e implementei testes unitários para todas as use-cases e controllers.

@@ -1,29 +1,32 @@
 import { UserRepository } from 'src/repositories/prisma/user-repository';
-import { AddFavoriteUseCase } from './add-pair-to-favorites.use-case';
+import { AddPairToFavoriteUseCase } from './add-pair-to-favorites.use-case';
 
-const mockUser = {
-  userId: 'user123',
-  characterId: 42,
-  catId: 'cat123',
-};
+describe('AddPairToFavoriteUseCase', () => {
+  let addPairToFavoriteUseCase: AddPairToFavoriteUseCase;
+  let mockUserRepository: Partial<UserRepository>;
 
-describe('AddFavoriteUseCase', () => {
-  let useCase: AddFavoriteUseCase;
-  let userRepo: jest.Mocked<UserRepository>;
+  const userId = 'user-123';
+  const characterId = 42;
+  const catId = 'cat-456';
 
   beforeEach(() => {
-    userRepo = {
+    mockUserRepository = {
       addToFav: jest.fn(),
-      create: jest.fn(),
-      findByEmail: jest.fn(),
-    } as unknown as jest.Mocked<UserRepository>;
+    };
 
-    useCase = new AddFavoriteUseCase(userRepo);
+    addPairToFavoriteUseCase = new AddPairToFavoriteUseCase(
+      mockUserRepository as UserRepository,
+    );
   });
 
-  it('should call addToFav with correct params', async () => {
-    await useCase.execute(mockUser);
+  it('should call userRepository.addToFav with correct arguments', async () => {
+    await addPairToFavoriteUseCase.execute(userId, characterId, catId);
 
-    jest.spyOn(useCase, 'execute').mockImplementation(async () => {});
+    expect(mockUserRepository.addToFav).toHaveBeenCalledTimes(1);
+    expect(mockUserRepository.addToFav).toHaveBeenCalledWith(
+      userId,
+      characterId,
+      catId,
+    );
   });
 });

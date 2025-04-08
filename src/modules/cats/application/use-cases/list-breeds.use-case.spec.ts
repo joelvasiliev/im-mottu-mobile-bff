@@ -1,18 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CatBreedResponse } from 'src/modules/cats/dto';
+import { ListBreedsUseCase } from './list-breeds.use-case';
 import { CatApiRepository } from 'src/repositories/http/cat-api-repository';
 
-@Injectable()
-export class ListBreedsUseCase {
-  constructor(private readonly catApiRepository: CatApiRepository) {}
+describe('ListBreedsUseCase', () => {
+  let useCase: ListBreedsUseCase;
+  let mockCatApiRepository: Partial<CatApiRepository>;
 
-  async execute(): Promise<CatBreedResponse[]> {
-    const breeds = await this.catApiRepository.listBreeds();
-    const filteredBreeds = breeds.map((b) => ({
-      id: b.id,
-      name: b.name,
-    }));
+  const mockBreeds = [
+    { id: 'abys', name: 'Abyssinian', origin: 'Egypt', temperament: 'Active' },
+    {
+      id: 'aege',
+      name: 'Aegean',
+      origin: 'Greece',
+      temperament: 'Affectionate',
+    },
+  ];
 
-    return filteredBreeds;
-  }
-}
+  beforeEach(() => {
+    mockCatApiRepository = {
+      listBreeds: jest.fn().mockResolvedValue(mockBreeds),
+    };
+
+    useCase = new ListBreedsUseCase(mockCatApiRepository as CatApiRepository);
+  });
+
+  it('should return an array of filtered CatBreedResponse (id and name only)', async () => {
+    const result = await useCase.execute();
+
+    expect(mockCatApiRepository.listBreeds).toHaveBeenCalled();
+    expect(result).toEqual([
+      { id: 'abys', name: 'Abyssinian' },
+      { id: 'aege', name: 'Aegean' },
+    ]);
+  });
+
+  it('should return an empty array if API returns no breeds', async () => {
+    (mockCatApiRepository.listBreeds as jest.Mock).mockResolvedValue([]);
+
+    const result = await useCase.execute();
+
+    expect(mockCatApiRepository.listBreeds).toHaveBeenCalled();
+    expect(result).toEqual([]);
+  });
+});

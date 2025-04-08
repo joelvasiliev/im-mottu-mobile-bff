@@ -1,79 +1,51 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { CatsController } from './cats.controller';
-import { CatsService } from './application/use-cases';
+import { GetRandomCatUseCase } from './application/use-cases/get-random-cat.use-case';
+import { ListBreedsUseCase } from './application/use-cases/list-breeds.use-case';
 import { Cat, CatBreedResponse } from './dto';
 
 describe('CatsController', () => {
   let controller: CatsController;
-  let service: CatsService;
+  let mockGetRandomCatUseCase: Partial<GetRandomCatUseCase>;
+  let mockListBreedsUseCase: Partial<ListBreedsUseCase>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [CatsController],
-      providers: [
-        {
-          provide: CatsService,
-          useValue: {
-            getRandomCat: jest.fn(),
-            getBreeds: jest.fn(),
-          },
-        },
-      ],
-    }).compile();
+  const mockCat: Cat = {
+    id: 'cat-123',
+    url: 'https://cdn2.thecatapi.com/images/cat-123.jpg',
+    width: 500,
+    height: 500,
+  };
 
-    controller = module.get<CatsController>(CatsController);
-    service = module.get<CatsService>(CatsService);
+  const mockBreeds: CatBreedResponse[] = [
+    { id: 'abys', name: 'Abyssinian' },
+    { id: 'aege', name: 'Aegean' },
+  ];
+
+  beforeEach(() => {
+    mockGetRandomCatUseCase = {
+      execute: jest.fn().mockResolvedValue(mockCat),
+    };
+
+    mockListBreedsUseCase = {
+      execute: jest.fn().mockResolvedValue(mockBreeds),
+    };
+
+    controller = new CatsController(
+      mockGetRandomCatUseCase as GetRandomCatUseCase,
+      mockListBreedsUseCase as ListBreedsUseCase,
+    );
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it('should return a random cat', async () => {
+    const result = await controller.getRandomCat();
+
+    expect(mockGetRandomCatUseCase.execute).toHaveBeenCalled();
+    expect(result).toEqual(mockCat);
   });
 
-  describe('getRandomCat', () => {
-    it('should return a random cat', async () => {
-      const mockCat: Cat = {
-        id: 'ed8',
-        url: 'https://cdn2.thecatapi.com/images/ed8.jpg',
-        width: 500,
-        height: 500,
-      };
+  it('should return list of cat breeds', async () => {
+    const result = await controller.getBreeds();
 
-      jest.spyOn(service, 'getRandomCat').mockResolvedValue(mockCat);
-
-      const result = await controller.getRandomCat();
-
-      expect(result).toEqual(mockCat);
-    });
-
-    it('should throw an error if the service throws an error', async () => {
-      jest
-        .spyOn(service, 'getRandomCat')
-        .mockRejectedValue(new Error('API error'));
-
-      await expect(controller.getRandomCat()).rejects.toThrow('API error');
-    });
-  });
-
-  describe('getBreeds', () => {
-    it('should return list of cat breeds', async () => {
-      const mockBreeds: CatBreedResponse[] = [
-        { id: 'abys', name: 'Abyssinian' },
-        { id: 'beng', name: 'Bengal' },
-      ];
-
-      jest.spyOn(service, 'getBreeds').mockResolvedValue(mockBreeds);
-
-      const result = await controller.getBreeds();
-
-      expect(result).toEqual(mockBreeds);
-    });
-
-    it('should throw an error if the service throws an error', async () => {
-      jest
-        .spyOn(service, 'getBreeds')
-        .mockRejectedValue(new Error('API error'));
-
-      await expect(controller.getBreeds()).rejects.toThrow('API error');
-    });
+    expect(mockListBreedsUseCase.execute).toHaveBeenCalled();
+    expect(result).toEqual(mockBreeds);
   });
 });

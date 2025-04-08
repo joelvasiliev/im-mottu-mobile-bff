@@ -1,22 +1,24 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 describe('AppController', () => {
-  let appController: AppController;
+  let controller: AppController;
+  let mockAppService: Partial<AppService>;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
-    }).compile();
+  beforeEach(() => {
+    mockAppService = {
+      getHello: jest.fn().mockReturnValue({ message: 'App is running' }),
+    };
 
-    appController = app.get<AppController>(AppController);
+    controller = new AppController(mockAppService as AppService);
   });
 
-  describe('healthcheck', () => {
-    it('should return { message: "App is running" }', () => {
-      expect(appController.getHello()).toEqual({ message: 'App is running' });
+  describe('getHello', () => {
+    it('should return a message indicating the app is running', () => {
+      const result = controller.getHello();
+
+      expect(mockAppService.getHello).toHaveBeenCalled();
+      expect(result).toEqual({ message: 'App is running' });
     });
   });
 });
